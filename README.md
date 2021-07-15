@@ -18,17 +18,46 @@ You can start editing the page by modifying `pages/index.tsx`. The page auto-upd
 
 The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
 
-## Learn More
+## Description 
 
-To learn more about Next.js, take a look at the following resources:
+What we did so far  * Skip to 3rd approach for final output*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+-Created V4 folder into the main folder of public listing
+- built the app using yarn create next-app --example with-apollo with-apollo-app --typescript
+-TS command didn't work, so we had to change the types manually as in docs 
+https://nextjs.org/learn/excel/typescript
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+-Following the example in https://dev.to/ivanms1/next-js-graphql-typescript-setup-5bog:
 
-## Deploy on Vercel
+while configuring the TS into the app we ran into an error Error: [object Object] is not a PostCSS plugin
+we looked into issue https://github.com/postcss/autoprefixer/issues/1358
+and followed the steps to solve it by adding the following:yarn add -D postcss
+||yarn add @rollup/plugin-typescript
+yarn add postcss-import-resolver
+yarn add rollup-plugin-postcss ||
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+-None of that worked so we tried a 3rd approach, creating the out of the box TS Next App with standard settings then configure it manually to have TS and Apollo. [ this was done in  a stand-alone folder outside the public-listings repo, since it kept breaking the code.
+- used the pkg to solve windows/linux env issues npm install -g win-node-env
+
+ We followed the steps in t this article to configure TS and Apollo with small adjustments: 
+
+https://dev.to/ivanms1/next-js-graphql-typescript-setup-5bog
+
+-At the final step to configure the query, we created a query.js file:
+inside of it we added 
+
+import {gql} from "@apollo/client";
+
+export const  query =gql 
+query {
+    countries {
+       name
+  }
+}
+
+also updated the API endpoint to be https://countries.trevorblades.com/
+
+example repo (private repo ask Arwa for permission if needed) : https://github.com/arwa1996/Next-ts-gql
+
+3
